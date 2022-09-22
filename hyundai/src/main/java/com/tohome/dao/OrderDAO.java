@@ -52,16 +52,6 @@ public class OrderDAO extends JDBConnect {
 			
 		}
 		
-		
-		  
-		  
-		
-		  
-		
-		
-	    	 
-		  
-		
 	}
 
 	

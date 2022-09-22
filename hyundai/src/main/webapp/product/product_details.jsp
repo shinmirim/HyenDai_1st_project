@@ -501,11 +501,7 @@
                                     </div>
                                 </fieldset>
                             </form>
-                            
-                            
-                            
-                            
-
+   
                             <div class="infotxt">
                                 <strong>리뷰 작성 안내</strong>
                                 <ul>
@@ -532,12 +528,6 @@
                                     </li>
                                 </ul>
                             </div>
-                            
-                            
-                            
-                            
-                            
-                            
                         </section>
                         <!-- //리뷰작성 -->
 
@@ -554,7 +544,6 @@
 </div>
 <script >
 	$(document).ready(function(){
-		console.log(<%=basketInsertYN%>);
 		if (<%=basketInsertYN%> == 1){
 			alert('상품이 장바구니에 담겼습니다.')
 		}
@@ -562,41 +551,24 @@
 	        AjaxConGet();
 	    })
 	});
-	
-	$(document).ready(function(){
-
-	    
-/* 	    $('#ajaxConPostButton').click(function(){
-	        AjaxConPost();
-	    }) */
-	    
-	})
 	 
 	function AjaxConGet(){
-		console.log(<%= request.getParameter("prod_no")%>);
 	    var url = "TohomeServlet?command=like_click";
 	    $.ajax({
 	        type:"post",
 	        url:url,
 	        dataType:"html",
 	        data:{
-/* 	            user_no : $('#ajaxConName').val(),*/
 	            prod_no :<%= request.getParameter("prod_no")%> 
 	        },
 	        success : function(data){
-/* 	            alert('ajax GET 통신 성공');
-	            var $div = $('<div></div>');
-	            var text = document.createTextNode(data);
-	            $div.append(data);
-	            $div.appendTo($('#myDiv'))
-	            alert("좋아요 담겼어요"); //에러 상태에 대한 세부사항 출력 */
+
 	        },
 	        error : function(request,status,error){
 	            alert('code:'+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); //에러 상태에 대한 세부사항 출력
 	            alert(e);
 	        }
 	    })
-	    
 	}
 
 </script>

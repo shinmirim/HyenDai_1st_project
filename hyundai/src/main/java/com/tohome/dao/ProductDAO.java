@@ -25,8 +25,8 @@ public class ProductDAO extends JDBConnect{
    
    //Written  by 미림, 여명
    public ArrayList<ProductDTO> getAllProductList(int topnum, int filter) {
-      ArrayList<ProductDTO> allProductList = new ArrayList<ProductDTO>();
-      String sql = "{call product_pkg.import_all_product_list(?,?,?)}";
+      ArrayList<ProductDTO> allProductList = new ArrayList<ProductDTO>(); //ProductList담을 그릇 준비
+      String sql = "{call product_pkg.import_all_product_list(?,?,?)}"; // sql문 준비(미리 정의해놓은 패키지안의 프로시저에 선언한 인자만큼 ? 를 넣음)
 
       Connection conn = null;
       CallableStatement cstmt=null;
@@ -35,9 +35,9 @@ public class ProductDAO extends JDBConnect{
       try {
          conn = JDBConnect.getConnection();
          cstmt = conn.prepareCall(sql);
-         cstmt.setInt(1, filter);
-         cstmt.setInt(2, topnum);
-           cstmt.registerOutParameter(3, OracleTypes.CURSOR);
+         cstmt.setInt(1, filter);//? 에 각각 맞는 값을 넣음
+         cstmt.setInt(2, topnum);//? 에 각각 맞는 값을 넣음
+           cstmt.registerOutParameter(3, OracleTypes.CURSOR);//? 에 각각 맞는 값을 넣음
          
            // CallableStatement를 실행
            cstmt.executeQuery();
@@ -49,7 +49,7 @@ public class ProductDAO extends JDBConnect{
            rs = ocstmt.getCursor(3);
              
          while (rs.next()) {
-            ProductDTO product = new ProductDTO();
+            ProductDTO product = new ProductDTO();// productDTO를 만들어놓고 아래는 값들은 전부 담음
             product.setProd_no(rs.getInt("prod_no"));
             product.setShop_name(rs.getString("shop_name"));
             product.setProd_name(rs.getString("prod_name"));
@@ -70,9 +70,10 @@ public class ProductDAO extends JDBConnect{
       return allProductList;
    }
    
+   //Written  by 여명, 승준
    public ArrayList<ProductDTO> getLatestProductList(int topnum) {
-      ArrayList<ProductDTO> LatestProductList = new ArrayList<ProductDTO>();
-      String sql = "{call product_pkg.import_latest_product_list(?,?)}";
+      ArrayList<ProductDTO> LatestProductList = new ArrayList<ProductDTO>(); //ProductList담을 그릇 준비
+      String sql = "{call product_pkg.import_latest_product_list(?,?)}"; // sql문 준비(미리 정의해놓은 패키지안의 프로시저에 선언한 인자만큼 ? 를 넣음)
 
       Connection conn = null;
       CallableStatement cstmt=null;
@@ -81,8 +82,8 @@ public class ProductDAO extends JDBConnect{
       try {
          conn = JDBConnect.getConnection();
          cstmt = conn.prepareCall(sql);
-         cstmt.setInt(1, topnum);
-           cstmt.registerOutParameter(2, OracleTypes.CURSOR);
+         cstmt.setInt(1, topnum);//? 에 각각 맞는 값을 넣음
+           cstmt.registerOutParameter(2, OracleTypes.CURSOR);//? 에 각각 맞는 값을 넣음
          
            // CallableStatement를 실행
            cstmt.executeQuery();
@@ -94,7 +95,7 @@ public class ProductDAO extends JDBConnect{
            rs = ocstmt.getCursor(2);
              
          while (rs.next()) {
-            ProductDTO product = new ProductDTO();
+            ProductDTO product = new ProductDTO();// productDTO를 만들어놓고 아래는 값들은 전부 담음
             product.setProd_no(rs.getInt("prod_no"));
             product.setShop_name(rs.getString("shop_name"));
             product.setProd_name(rs.getString("prod_name"));
@@ -114,10 +115,10 @@ public class ProductDAO extends JDBConnect{
       }
       return LatestProductList;
    }
-   
+   //Written  by 여명, 승준
    public ArrayList<ProductDTO> getCategoryProductList(int cid, int topnum, int filter) {
-      ArrayList<ProductDTO> categoryProductList = new ArrayList<ProductDTO>();
-      String sql = "{call product_pkg.import_category_product_list(?,?,?,?)}";
+      ArrayList<ProductDTO> categoryProductList = new ArrayList<ProductDTO>();  //ProductList담을 그릇 준비
+      String sql = "{call product_pkg.import_category_product_list(?,?,?,?)}"; // sql문 준비(미리 정의해놓은 패키지안의 프로시저에 선언한 인자만큼 ? 를 넣음)
 
       Connection conn = null;
       CallableStatement cstmt=null;
@@ -126,10 +127,10 @@ public class ProductDAO extends JDBConnect{
       try {
          conn = JDBConnect.getConnection();
          cstmt = conn.prepareCall(sql);
-         cstmt.setInt(1, filter);
-         cstmt.setInt(2, cid);
-         cstmt.setInt(3, topnum);
-         cstmt.registerOutParameter(4, OracleTypes.CURSOR);
+         cstmt.setInt(1, filter);//? 에 각각 맞는 값을 넣음
+         cstmt.setInt(2, cid);//? 에 각각 맞는 값을 넣음
+         cstmt.setInt(3, topnum);//? 에 각각 맞는 값을 넣음
+         cstmt.registerOutParameter(4, OracleTypes.CURSOR);//? 에 in out모드로 테이블 커서를 반환받을 수 있게 커서 타입을 outParmeter로 등록
          
            // CallableStatement를 실행
            cstmt.executeQuery();
@@ -141,7 +142,7 @@ public class ProductDAO extends JDBConnect{
            rs = ocstmt.getCursor(4);
              
          while (rs.next()) {
-            ProductDTO product = new ProductDTO();
+            ProductDTO product = new ProductDTO();// productDTO를 만들어놓고 아래는 값들은 전부 담음
             product.setProd_no(rs.getInt("prod_no"));
             product.setShop_name(rs.getString("shop_name"));
             product.setProd_name(rs.getString("prod_name"));
@@ -162,10 +163,11 @@ public class ProductDAO extends JDBConnect{
       return categoryProductList;
    }
    
+   //Written  by 여명, 승준
    public ArrayList<ProductDTO> LatestProductList(int topnum, int filter) {
 
-	      ArrayList<ProductDTO> latestProductList = new ArrayList<ProductDTO>();
-	      String sql = "{call product_pkg.import_latest_product_list(?,?,?)}";
+	      ArrayList<ProductDTO> latestProductList = new ArrayList<ProductDTO>();//ProductList담을 그릇 준비
+	      String sql = "{call product_pkg.import_latest_product_list(?,?,?)}";// sql문 준비(미리 정의해놓은 패키지안의 프로시저에 선언한 인자만큼 ? 를 넣음)
 
 	      Connection conn = null;
 	      CallableStatement cstmt=null;
@@ -174,9 +176,9 @@ public class ProductDAO extends JDBConnect{
 	      try {
 	         conn = JDBConnect.getConnection();
 	         cstmt = conn.prepareCall(sql);
-	         cstmt.setInt(1, filter);
-	         cstmt.setInt(2, topnum);
-	           cstmt.registerOutParameter(3, OracleTypes.CURSOR);
+	         cstmt.setInt(1, filter);//? 에 각각 맞는 값을 넣음
+	         cstmt.setInt(2, topnum);//? 에 각각 맞는 값을 넣음
+	           cstmt.registerOutParameter(3, OracleTypes.CURSOR);//? 에 각각 맞는 값을 넣음
 	         
 	           // CallableStatement를 실행
 	           cstmt.executeQuery();
@@ -187,7 +189,7 @@ public class ProductDAO extends JDBConnect{
 	           // ResultSet에 결과 데이터를 담은 Cursor를 저장
 	           rs = ocstmt.getCursor(3);
 	         while (rs.next()) {
-	            ProductDTO product = new ProductDTO();
+	            ProductDTO product = new ProductDTO();// productDTO를 만들어놓고 아래는 값들은 전부 담음
 	            product.setProd_no(rs.getInt("prod_no"));
 	            product.setShop_name(rs.getString("shop_name"));
 	            product.setProd_name(rs.getString("prod_name"));
@@ -208,9 +210,10 @@ public class ProductDAO extends JDBConnect{
 	      return latestProductList;
 	   }
    
+   //Written  by 여명, 승준
    public ArrayList<ProductDTO> getLatestProductList(int cid, int topnum) {
-      ArrayList<ProductDTO> latestProductList = new ArrayList<ProductDTO>();
-      String sql = "{call product_pkg.import_category_latest_product_list(?,?,?)}";
+      ArrayList<ProductDTO> latestProductList = new ArrayList<ProductDTO>();//ProductList담을 그릇 준비
+      String sql = "{call product_pkg.import_category_latest_product_list(?,?,?)}";// sql문 준비(미리 정의해놓은 패키지안의 프로시저에 선언한 인자만큼 ? 를 넣음)
 
       Connection conn = null;
       CallableStatement cstmt=null;
@@ -219,9 +222,9 @@ public class ProductDAO extends JDBConnect{
       try {
          conn = JDBConnect.getConnection();
          cstmt = conn.prepareCall(sql);
-         cstmt.setInt(1, cid);
-         cstmt.setInt(2, topnum);
-           cstmt.registerOutParameter(3, OracleTypes.CURSOR);
+         cstmt.setInt(1, cid);//? 에 각각 맞는 값을 넣음
+         cstmt.setInt(2, topnum);//? 에 각각 맞는 값을 넣음
+           cstmt.registerOutParameter(3, OracleTypes.CURSOR);//? 에 각각 맞는 값을 넣음
          
            // CallableStatement를 실행
            cstmt.executeQuery();
@@ -232,7 +235,7 @@ public class ProductDAO extends JDBConnect{
            // ResultSet에 결과 데이터를 담은 Cursor를 저장
            rs = ocstmt.getCursor(3);
          while (rs.next()) {
-            ProductDTO product = new ProductDTO();
+            ProductDTO product = new ProductDTO();// productDTO를 만들어놓고 아래는 값들은 전부 담음
             product.setProd_no(rs.getInt("prod_no"));
             product.setShop_name(rs.getString("shop_name"));
             product.setProd_name(rs.getString("prod_name"));
@@ -253,7 +256,7 @@ public class ProductDAO extends JDBConnect{
       return latestProductList;
    }
    
-
+   //Written  by 여명, 승준 - 이부분은 사실상 안쓰는 부분 초반 테스트 용이였음
    public ProductDTO getProduct(int prod_no) {
       ProductDTO product = new ProductDTO();
       String sql = "select * from prod_detail where prod_no = ? ";
@@ -287,7 +290,7 @@ public class ProductDAO extends JDBConnect{
       return product;
    }
 
-   
+   //이부분 시간부족으로 기능구현 못해서 쓰지않음
    public int insertProduct(ProductDTO product) {
       int result = 0;
 
@@ -300,18 +303,6 @@ public class ProductDAO extends JDBConnect{
       try {
          con = JDBConnect.getConnection();
          pstmt = con.prepareStatement(sql);
-         
-         
-         
-         
-         
-//      pstmt.setString(1, product.getKind());      
-//      pstmt.setString(2, product.getName());
-//      pstmt.setInt(3, product.getPrice1());
-//      pstmt.setInt(4, product.getPrice2());
-//      pstmt.setInt(5, product.getPrice3());
-//      pstmt.setString(6, product.getContent());
-//      pstmt.setString(7, product.getImage());
          pstmt = con.prepareCall(sql);
          pstmt.setInt(2, product.getProd_no());
          pstmt.setInt(2, product.getProd_no());
@@ -326,6 +317,7 @@ public class ProductDAO extends JDBConnect{
       return result;
    }
 
+   //이부분 시간부족으로 기능구현 못해서 쓰지않음
    public int updateProduct(ProductDTO product) {
       int result = -1;
       String sql = "update product set kind=?, useyn=?, name=?"
@@ -337,16 +329,6 @@ public class ProductDAO extends JDBConnect{
       try {
          con = JDBConnect.getConnection();
          pstmt = con.prepareStatement(sql);
-//      pstmt.setString(1, product.getKind());
-//      pstmt.setString(2, product.getUseyn());
-//      pstmt.setString(3, product.getName());
-//      pstmt.setInt(4, product.getPrice1());
-//      pstmt.setInt(5, product.getPrice2());
-//      pstmt.setInt(6, product.getPrice3());
-//      pstmt.setString(7, product.getContent());
-//      pstmt.setString(8, product.getImage());
-//      pstmt.setString(9, product.getBestyn());
-//      pstmt.setInt(10, product.getPseq());
          result = pstmt.executeUpdate();
       } catch (Exception e) {
          e.printStackTrace();

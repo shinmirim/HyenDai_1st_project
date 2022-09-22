@@ -12,17 +12,8 @@ import oracle.jdbc.OracleCallableStatement;
 import oracle.jdbc.OracleType;
 import oracle.jdbc.OracleTypes;
 
-//Written  by 여명
+//Written  by 여명, 승준
 public class MemberDAO extends JDBConnect{
-  // ----- Singlton Patten -----
-	/*
-	 * private MemberDAO() { // 부모Class인 JDBCConnect의 생성자 호출로 db연결객체 생성 super(); }
-	 * private static MemberDAO instance = new MemberDAO();
-	 * 
-	 * public static MemberDAO getInstance() { return instance; }
-	 */
-  // ----- Singlton Patten -----
-
 	private MemberDAO() {
 	}
 
@@ -36,7 +27,7 @@ public class MemberDAO extends JDBConnect{
   // 회원가입 가능한 id인지 체크
   //Written by 여명, 승준
   public int checkID(String uid){
-      String query = "{call member_pkg.id_check(?,?)}";
+      String query = "{call member_pkg.id_check(?,?)}"; // sql문 준비(미리 정의해놓은 패키지안의 프로시저에 선언한 인자만큼 ? 를 넣음)
       int result = 0;
 
 	  Connection con = null;
@@ -47,8 +38,8 @@ public class MemberDAO extends JDBConnect{
     	  con = JDBConnect.getConnection();
 		  
           cstmt = con.prepareCall(query); // 동적 쿼리문 준비
-          cstmt.setString(1, uid);
-          cstmt.registerOutParameter(2, OracleType.NUMBER);
+          cstmt.setString(1, uid);//? 에 각각 맞는 값을 넣음
+          cstmt.registerOutParameter(2, OracleType.NUMBER);//? 에 각각 맞는 값을 넣음 이는 프로시저에서 out모드로 나온 숫자값을 받기위해 outParameter로 등록!
 
           cstmt.executeQuery();
           result = cstmt.getInt(2);
@@ -59,7 +50,7 @@ public class MemberDAO extends JDBConnect{
 			JDBConnect.close();
 		}
 
-      return result;
+      return result;// 등록된 Id가 있으면 1 없으면 0
   }
 
   //Written by 여명, 승준
@@ -75,7 +66,7 @@ public class MemberDAO extends JDBConnect{
           String addressName )
       {
       MemberDTO dto = new MemberDTO();  // 회원 정보 DTO 객체 생성
-      String query = "{call mpkg.member_join(?,?,?,?,?,?,?,?,?,?)}";  // 쿼리문 템플릿
+      String query = "{call mpkg.member_join(?,?,?,?,?,?,?,?,?,?)}";  // sql문 준비(미리 정의해놓은 패키지안의 프로시저에 선언한 인자만큼 ? 를 넣음)
      
 	  Connection con = null;
 	  CallableStatement cstmt = null;
@@ -85,22 +76,22 @@ public class MemberDAO extends JDBConnect{
 		  
           // 쿼리 실행
           cstmt = con.prepareCall(query); // 동적 쿼리문 준비
-          cstmt.setString(1, userId);
-          cstmt.setString(2, userPwd);
-          cstmt.setString(3, userName);
-          cstmt.setString(4, bithYMD);
-          cstmt.setString(5, mobileNum);
-          cstmt.setString(6, gender);
-          cstmt.setString(7, addressMain);
-          cstmt.setString(8, addressDetail);
-          cstmt.setString(9, addressName);
-          cstmt.registerOutParameter(10, OracleType.NUMBER);
+          cstmt.setString(1, userId);//? 에 각각 맞는 값을 넣음
+          cstmt.setString(2, userPwd);//? 에 각각 맞는 값을 넣음
+          cstmt.setString(3, userName);//? 에 각각 맞는 값을 넣음
+          cstmt.setString(4, bithYMD);//? 에 각각 맞는 값을 넣음
+          cstmt.setString(5, mobileNum);//? 에 각각 맞는 값을 넣음
+          cstmt.setString(6, gender);//? 에 각각 맞는 값을 넣음
+          cstmt.setString(7, addressMain);//? 에 각각 맞는 값을 넣음
+          cstmt.setString(8, addressDetail);//? 에 각각 맞는 값을 넣음
+          cstmt.setString(9, addressName);//? 에 각각 맞는 값을 넣음
+          cstmt.registerOutParameter(10, OracleType.NUMBER);//? 에 각각 맞는 값을 넣음 이는 프로시저에서 out모드로 나온 숫자값을 받기위해 outParameter로 등록!
 
 
-          // CallableStatement를 실행
+          // CallableStatement를 실행, 테이블에 잘 들어가면 들어간 row만큼 숫자를 뱉음
           int cnt =cstmt.executeUpdate();
 
-          //성공하면 세션을 위한 id, name넣기 ~
+          //1이성이면 성공, 성공하면 세션을 위한 id, name, user_no넣기 ~
           if (cnt > 0){
               dto.setUser_id(userId);
               dto.setUser_name(userName);

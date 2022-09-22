@@ -16,7 +16,7 @@ public class LogoutAction implements Action{
         HttpSession session=request.getSession(false);
 
         if(session!=null){
-            //session이 있으면 모든 속성 한꺼번에 삭제(UserId, UserName)
+            //session이 있으면 모든 속성 한꺼번에 삭제(UserId, UserName, 장바구니갯수, user_no)
             session.invalidate();
         }
 
