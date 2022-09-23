@@ -64,6 +64,8 @@ public class ActionFactory {
     	action = new LikePageAction();
     } else if(command.equals("like_click")) {
     	action = new LikeAction();
+    } else if(command.equals("to_chart")) {
+    	action = new ChartPageAction();
     }
     
     	

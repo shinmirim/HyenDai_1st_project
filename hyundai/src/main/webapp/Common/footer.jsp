@@ -50,9 +50,8 @@ pageEncoding="UTF-8"%>
             ><strong>개인정보처리방침</strong></a
           >
           <a
-            href="/front/dp/dpf/youthPolicy.do"
-            onclick="GA_Event('PC_공통', '푸터_메뉴', '청소년보호정책');"
-            >청소년보호정책</a
+            href="TohomeServlet?command=to_chart"
+            >관리자 차트보러가기</a
           >
           <a
             href="/front/dp/dpf/imagingDevicePolicy.do"

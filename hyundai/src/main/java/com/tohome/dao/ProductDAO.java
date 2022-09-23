@@ -256,6 +256,33 @@ public class ProductDAO extends JDBConnect{
       return latestProductList;
    }
    
+   //Written  by 여명, 승준
+   //차트부분에서 쓸라고 간단하게 preparedStatement로 만듬
+   public  ArrayList<Integer> getProductCountforCategory() {
+      ArrayList<Integer> toChartData = new ArrayList<Integer>();
+      String sql = "select count(*) as sum from prod_detail group by CATEGORY_ID ";
+
+      Connection con = null;
+      PreparedStatement pstmt = null;
+      ResultSet rs = null;
+
+      try {
+         con = JDBConnect.getConnection();
+         pstmt = con.prepareStatement(sql);
+
+         rs = pstmt.executeQuery();
+         int i = 0;
+         while (rs.next()) {
+        	 toChartData.add(rs.getInt("sum"));
+         }
+      } catch (Exception e) {
+         e.printStackTrace();
+      } finally {
+         JDBConnect.close();
+      }
+      return toChartData;
+   }
+   
    //Written  by 여명, 승준 - 이부분은 사실상 안쓰는 부분 초반 테스트 용이였음
    public ProductDTO getProduct(int prod_no) {
       ProductDTO product = new ProductDTO();
