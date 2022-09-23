@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.tohome.dao.ProductDAO;
 import com.tohome.dto.ProductDTO;
 
+//Written  by 여명, 승준
 public class MainAction implements Action {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String url = "/main.jsp";

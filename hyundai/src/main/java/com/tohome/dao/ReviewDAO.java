@@ -212,7 +212,7 @@ public void deleteReview(ReviewDTO reviewDTO) {
 public ArrayList<ReviewDTO> getUserReviewList(String user_id) {
 ArrayList<ReviewDTO> userReviewList = new ArrayList<ReviewDTO>();
 	
-	String sql = "{call selectUserReview(?,?)}";
+	String sql = "select * from F_SELECTUSERREVIEW(?)";
 
 	Connection conn = null;
 	CallableStatement cstmt=null;
@@ -221,17 +221,10 @@ ArrayList<ReviewDTO> userReviewList = new ArrayList<ReviewDTO>();
 	try {
 		conn = JDBConnect.getConnection();
 		cstmt = conn.prepareCall(sql);
-        cstmt.registerOutParameter(1, OracleTypes.CURSOR);
-        cstmt.setString(2, user_id);
+        cstmt.setString(1, user_id);
 		
         // CallableStatement를 실행
-        cstmt.executeQuery();
-
-        // getCursor() 메서드를 사용하기 위해 OracleCallableStatement Object로 변환
-        // CallableStatement는 getCursor() 메서드가 정의되어 있지 않기 때문
-        OracleCallableStatement ocstmt = (OracleCallableStatement)cstmt;
-        // ResultSet에 결과 데이터를 담은 Cursor를 저장
-        rs = ocstmt.getCursor(1);
+        rs=cstmt.executeQuery();
           
 		while (rs.next()) {
 			ReviewDTO review = new ReviewDTO();
